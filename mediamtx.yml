@@ -1,0 +1,15 @@
+rtsp: yes
+hls: yes
+
+hlsAddress: :8888
+hlsSegmentCount: 10
+hlsSegmentDuration: 2s
+
+hlsSegmentMaxAge: 6s
+hlsDeleteThreshold: 5
+
+paths:
+  all:
+    record: no
+    readUser: ""
+    readPass: ""
