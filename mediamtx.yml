@@ -6,12 +6,14 @@ webrtcAddress: :8189
 apiAddress: :8889
 hlsAddress: :8888
 
-hlsAllowOrigin: "*"
-hlsSegmentCount: 10
-hlsSegmentDuration: 2s
-
 api: yes
 apiAllowOrigin: "*"
+
+hlsAllowOrigin: "*"
+hlsSegmentCount: 3
+hlsSegmentDuration: 2s
+hlsPartDuration: 0.5s
+hlsVariant: mpegts
 
 paths:
   all:

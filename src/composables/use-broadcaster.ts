@@ -1,8 +1,5 @@
 import Hls from "hls.js";
 import { type TemplateRef } from "vue";
-import { getStreamUrl } from "@/config";
-
-const streamUrl = getStreamUrl();
 
 const errorHandler = (
   video: TemplateRef<HTMLMediaElement | null>,
@@ -27,8 +24,6 @@ const errorHandler = (
   });
 
   hls.on(Hls.Events.ERROR, (event, data) => {
-    console.log("HLS Error:", data.type, data.details, data.fatal);
-
     if (data.fatal) {
       switch (data.type) {
         case Hls.ErrorTypes.MEDIA_ERROR: {
@@ -62,30 +57,36 @@ const errorHandler = (
 
 export const useBroadcaster = (
   videoRef: TemplateRef<HTMLMediaElement | null>,
+  streamUrl: string = import.meta.env.VITE_HLS_URL,
 ) => {
+  let hls: Hls | null = null;
+
   const initStream = () => {
-    if (!videoRef.value) {
-      console.error("Video element not found");
-      return;
-    }
+    if (!videoRef.value) return;
 
     console.log("Initializing stream with URL:", streamUrl);
 
     if (Hls.isSupported()) {
-      const hls = new Hls({
-        startPosition: -1,
+      hls = new Hls({
         maxBufferLength: 5,
+        maxBufferSize: 5 * 1000 * 1000, // 5 MB
+        liveSyncDuration: 2,
+        liveMaxLatencyDuration: 3,
         backBufferLength: 0,
+        lowLatencyMode: false,
+        autoStartLoad: true,
+        maxLiveSyncPlaybackRate: 1.5,
+        frontBufferFlushThreshold: 1,
+        maxMaxBufferLength: 5,
       });
+
+      videoRef.value.controls = false;
+      videoRef.value.disableRemotePlayback = true;
 
       hls.loadSource(streamUrl);
       hls.attachMedia(videoRef.value);
 
       errorHandler(videoRef, hls);
-
-      hls.on(Hls.Events.MANIFEST_LOADED, () => {
-        console.log("Stream manifest loaded successfully");
-      });
     } else if (videoRef.value.canPlayType("application/vnd.apple.mpegurl")) {
       console.log("Using native HLS support");
       videoRef.value.src = streamUrl;
@@ -94,7 +95,26 @@ export const useBroadcaster = (
     }
   };
 
+  const pauseStream = () => {
+    if (!videoRef.value || !hls) return;
+    console.log("asdsadsd");
+    hls.stopLoad();
+    hls.detachMedia();
+    videoRef.value.src = "";
+  };
+
+  const destroyStream = () => {
+    if (!videoRef.value) return;
+
+    if (hls) {
+      hls.destroy();
+      hls = null;
+    }
+  };
+
   return {
     initStream,
+    destroyStream,
+    pauseStream,
   };
 };

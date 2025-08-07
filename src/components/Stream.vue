@@ -1,13 +1,20 @@
 <script setup lang="ts">
-import { useTemplateRef, onMounted } from "vue";
+import { useTemplateRef, onMounted, onUnmounted, watch } from "vue";
 import { useBroadcaster } from "@/composables/use-broadcaster";
+
+const props = defineProps<{
+  active: boolean;
+}>();
 
 const video = useTemplateRef("video");
 
-const { initStream } = useBroadcaster(video);
+const { initStream, destroyStream, pauseStream } = useBroadcaster(video);
 
 onMounted(() => {
   initStream();
+});
+onUnmounted(() => {
+  destroyStream();
 });
 </script>
 
@@ -17,6 +24,7 @@ onMounted(() => {
     :controls="false"
     autoplay
     muted
-    class="w-full h-full z-100"
+    class="w-full h-full"
+    :class="{ 'scale-200': props.active }"
   />
 </template>

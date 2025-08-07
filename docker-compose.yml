@@ -25,29 +25,43 @@ services:
     depends_on:
       mediamtx:
         condition: service_healthy
-    environment:
-      - RTSP_INPUT=${RTSP_INPUT}
-      - RTSP_OUTPUT=${RTSP_OUTPUT}
-    command: |
-      echo "Starting ffmpeg..."
-      echo "rtsp input: ${RTSP_INPUT}"
-      ffmpeg -rtsp_transport tcp \
-             -i '${RTSP_INPUT}' \
-             -c:v libx264 \
-             -preset ultrafast \
-             -tune zerolatency \
-             -profile:v baseline \
-             -level 3.1 \
-             -pix_fmt yuv420p \
-             -r 25 \
-             -g 50 \
-             -b:v 1500k \
-             -maxrate 2000k \
-             -bufsize 3000k \
-             -an \
-             -f rtsp \
-             -rtsp_transport tcp \
-             '${RTSP_OUTPUT}'
+    command:
+      [
+        "-rtsp_transport",
+        "tcp",
+        "-i",
+        "rtsp://filder:m%40kr0mE2@176.196.225.210:9554/cam/realmonitor?channel=1&subtype=0",
+        "-c:v",
+        "libx264",
+        "-preset",
+        "ultrafast",
+        "-tune",
+        "zerolatency",
+        "-profile:v",
+        "baseline",
+        "-level",
+        "3.1",
+        "-pix_fmt",
+        "yuv420p",
+        "-r",
+        "25",
+        "-g",
+        "50",
+        "-b:v",
+        "1500k",
+        "-maxrate",
+        "2000k",
+        "-bufsize",
+        "3000k",
+        "-an",
+        "-vf",
+        "scale=640:-1",
+        "-f",
+        "rtsp",
+        "-rtsp_transport",
+        "tcp",
+        "rtsp://mediamtx:8554/cam",
+      ]
     restart: unless-stopped
     networks:
       - video_network

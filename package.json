@@ -7,11 +7,10 @@
     "dev": "vite --host",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
-    "docker:dev": "docker compose --env-file .env.dev up",
-    "docker:prod": "docker compose --env-file .env.prod up",
+    "docker:dev": "docker compose --env-file .env up",
     "docker:build": "docker compose build",
     "docker:down": "docker compose down",
-    "debug:env": "echo 'Checking environment files:' && ls -la .env* && echo '\\n--- .env.dev ---' && cat .env.dev"
+    "debug:env": "echo 'Checking environment files:' && ls -la .env* && echo '\\n--- .env ---' && cat .env"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.0",
