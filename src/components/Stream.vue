@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useTemplateRef, onMounted } from "vue";
-import { useBroadcaster } from "../composables/use-broadcaster";
+import { useBroadcaster } from "@/composables/use-broadcaster";
 
 const video = useTemplateRef("video");
 
