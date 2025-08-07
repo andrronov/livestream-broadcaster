@@ -1,7 +1,7 @@
 import Hls from "hls.js";
 import { type TemplateRef } from "vue";
 
-const streamUrl = "http://localhost:8888/cam/index.m3u8";
+const streamUrl = "https://livestream-broadcaster.onrender.com:8888/index.m3u8";
 
 const errorHandler = (video, hls) => {
   let attemptedErrorRecovery = null;
