@@ -45,6 +45,8 @@ services:
              -f rtsp \
              -rtsp_transport tcp \
              '${RTSP_OUTPUT}'
+    environment:
+      - RTSP_INPUT=${RTSP_INPUT}
     restart: unless-stopped
     networks:
       - video_network

@@ -4,7 +4,7 @@ hls: yes
 rtspAddress: :8554
 webrtcAddress: :8189
 apiAddress: :8889
-hlsAddress: :8888
+hlsAddress: :443
 
 hlsAllowOrigin: "*"
 hlsSegmentCount: 10
