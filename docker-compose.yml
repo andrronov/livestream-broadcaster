@@ -25,6 +25,9 @@ services:
     depends_on:
       mediamtx:
         condition: service_healthy
+    environment:
+      - RTSP_INPUT=${RTSP_INPUT}
+      - RTSP_OUTPUT=${RTSP_OUTPUT}
     command: |
       echo "Starting ffmpeg..."
       echo "rtsp input: ${RTSP_INPUT}"
@@ -45,8 +48,6 @@ services:
              -f rtsp \
              -rtsp_transport tcp \
              '${RTSP_OUTPUT}'
-    environment:
-      - RTSP_INPUT=${RTSP_INPUT}
     restart: unless-stopped
     networks:
       - video_network

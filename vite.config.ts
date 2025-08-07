@@ -20,6 +20,7 @@ export default defineConfig({
     allowedHosts: [
       "localhost",
       "127.0.0.1",
+      "livestream-broadcaster-lgspuq.fly.dev",
       process.env.VITE_ALLOWED_HOST || "",
     ].filter(Boolean),
   },
