@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   mediamtx:
     image: bluenviron/mediamtx:latest-ffmpeg
@@ -22,6 +20,12 @@ services:
   ffmpeg:
     image: jrottenberg/ffmpeg:4.4-alpine
     container_name: video_ffmpeg
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+        reservations:
+          memory: 300M
     depends_on:
       mediamtx:
         condition: service_healthy
@@ -48,11 +52,11 @@ services:
         "-g",
         "50",
         "-b:v",
-        "1500k",
+        "800k",
         "-maxrate",
-        "2000k",
+        "1000k",
         "-bufsize",
-        "3000k",
+        "1500k",
         "-an",
         "-vf",
         "scale=640:-1",

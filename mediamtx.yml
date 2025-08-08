@@ -11,7 +11,7 @@ apiAllowOrigin: "*"
 
 hlsAllowOrigin: "*"
 hlsSegmentCount: 3
-hlsSegmentDuration: 2s
+hlsSegmentDuration: 4s
 hlsPartDuration: 0.5s
 hlsVariant: mpegts
 
