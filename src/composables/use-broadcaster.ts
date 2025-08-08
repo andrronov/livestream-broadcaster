@@ -2,9 +2,11 @@ import Hls from "hls.js";
 import { type TemplateRef } from "vue";
 import { useErrorHandler } from "@/utils/use-error-handling";
 
+const defaultUrl = "http://localhost:8888/cam/index.m3u8";
+
 export const useBroadcaster = (
   videoRef: TemplateRef<HTMLMediaElement | null>,
-  streamUrl: string = import.meta.env.VITE_HLS_URL,
+  streamUrl: string = defaultUrl,
 ) => {
   let hls: Hls | null = null;
   const { attachErrorHandlers, detachErrorHandlers } = useErrorHandler();
