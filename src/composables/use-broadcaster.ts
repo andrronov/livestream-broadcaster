@@ -1,6 +1,6 @@
 import Hls from "hls.js";
 import { type TemplateRef } from "vue";
-import { useErrorHandler } from "@/utils/use-error-handling";
+import { useErrorHandler } from "@/composables/use-error-handler";
 
 const defaultUrl = "http://localhost:8888/cam/index.m3u8";
 

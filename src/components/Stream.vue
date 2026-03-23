@@ -4,12 +4,15 @@ import { useBroadcaster } from "@/composables/use-broadcaster";
 
 const props = defineProps<{
   disabled: boolean;
+  streamUrl: string;
 }>();
 
 const video = useTemplateRef("video");
 
-const { initStream, destroyStream, pauseStream, resumeStream } =
-  useBroadcaster(video);
+const { initStream, destroyStream, pauseStream, resumeStream } = useBroadcaster(
+  video,
+  props.streamUrl,
+);
 
 onMounted(() => {
   initStream();
